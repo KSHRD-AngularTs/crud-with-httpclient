@@ -1,0 +1,53 @@
+<div class="p-grid">
+  <p-paginator [rows]="limit"
+               [totalRecords]="totalRecords"
+               [rowsPerPageOptions]="[10,20,30,40,50,200]"
+               (onPageChange)="paginate($event)">
+  </p-paginator>
+  <a href="" routerLink="/articles/create">
+    <p-button icon="pi pi-plus" label="Create"></p-button>
+  </a>
+  <p-table [value]="articles"
+           styleClass="p-datatable-gridlines"
+  >
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        Article Management System
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>No</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Image</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-index='rowIndex' let-article>
+      <tr>
+        <td>{{first + index}}</td>
+        <td>
+          <span *ngIf="article.title; let not">{{article.title}}</span>
+        </td>
+        <td>{{article.description}}</td>
+        <td><img [src]="article.image" [alt]="article.title" width="100"
+                 class="p-shadow-4"/></td>
+        <td><span
+          [class]="'article-badge status-' + article.published">{{article.published}}</span>
+        </td>
+        <td>
+          <a href="" routerLink="/articles/{{article._id}}/show">
+            <button pButton pRipple type="button" icon="pi pi-eye"
+                    class="p-button-rounded p-button-success p-button-outlined"></button>
+          </a>
+          <button pButton pRipple type="button" icon="pi pi-trash"
+                  [style]="{'margin-left': '.5em'}"
+                  (click)="onDelete(article._id)"
+                  class="p-button-rounded p-button-danger p-button-outlined"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
